@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style>
+			* {
+				padding: 0px;
+				margin: 0px;
+			}
+			
+			ul {
+				/*outline: none;*/
+				list-style: none;
+			}
+			
+			li {
+				outline: none;
+				list-style: none;
+			}
+			
+			#xie_lunbo {
+				width: 400px;
+				height: 200px;
+				border: 1px solid red;
+				margin: 0 auto;
+				overflow: hidden;
+				position: relative;
+			}
+			
+			#xie {
+				position: absolute;
+			}
+			
+			ul li {
+				width: 400px;
+				height: 200px;
+				float: left;
+			}
+			
+			ul {
+				width: 2800px;
+			}
+			
+			.yellow {
+				background: yellow
+			}
+			
+			.red {
+				background: red
+			}
+			
+			.green {
+				background: green
+			}
+			
+			.black {
+				background: black;
+			}
+			
+			.pink {
+				background: pink;
+			}
+			
+			.pink1 {
+				background: #FF0000;
+			}
+			
+			#biaoji {
+				position: absolute;
+				left: 800px;
+				top: 160px;
+			}
+			
+			#biaoji li {
+				float: left;
+				padding: 2px;
+				margin: 2px;
+				border-radius: .2rem;
+				border: 1px solid red;
+				/*background: red;*/
+				color: #fff;
+			}
+			
+			#next {
+				position: absolute;
+				top: 100px;
+				left: 1000px;
+			}
+			
+			#pre {
+				position: absolute;
+				top: 100px;
+				left: 650px;
+			}
+			
+			#box {
+				position: relative;
+				width: 100%;
+				height: 200px;
+			}
+			
+			.on {
+				background-color: #FFC0CB;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="box">
+			<div id="xie_lunbo">
+				<ul id="xie" style="left: -400px;">
+					<li class="pink1" index='5'></li>
+					<li class="yellow" index='1'>1</li>
+					<li class="red" index='2'>2</li>
+					<li class="green" index='3'>3</li>
+					<li class="black" index='4'>4</li>
+					<li class="pink" index='5'>5</li>
+					<li class="yellow" index='1'></li>
+				</ul>
+			</div>
+			<div class="">
+				<p id="next">next</p>
+				<p id="pre">pre</p>
+			</div>
+			<div id="biaoji">
+				<li class="on">1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+			</div>
+		</div>
+		<script>
+			window.onload = function() {
+				var xie = document.getElementById("xie")
+				var next = document.getElementById("next")
+				var pre = document.getElementById("pre")
+				var xie_lunbo = document.getElementById("xie_lunbo")
+				var buttons = document.getElementById("biaoji").getElementsByTagName("li")
+				var box = document.getElementById("box")
+				function animate(offset) {
+					console.log(offset)
+					newleft = parseInt(xie.style.left) + offset;
+					xie.style.left = newleft + 'px'
+					if(newleft < -2000) {
+						xie.style.left = -400 + 'px';
+					}
+					if(newleft > -400) {
+						xie.style.left = -2000 + 'px';
+					}
+				}
+				next.onclick = function() {
+					index = index+1
+					if(index>5){
+						index = 1
+					}
+					animate(-400)
+					buttonshow()
+				}
+				pre.onclick = function() {
+					index = index-1
+					if(index<1){
+						index = 5
+					}
+					animate(400)
+					buttonshow()
+				}
+				//				var timer = setInterval(function(){
+				//					animate(-400)
+				//				},1000)
+				var timer
+				//定义定时器
+				function play() {
+					timer = setInterval(function() {
+						next.onclick()
+					}, 1000)
+				}
+				//启动定时器
+				play()
+
+				function stop() {
+					clearInterval(timer)
+				}
+				//鼠标进入停止
+				box.onmouseover = function() {
+					stop()
+				}
+				//鼠标移出开始动画
+				box.onmouseout = function() {
+					play()
+				}
+				//
+//				console.log(buttons[0].className)
+				//下标自动轮播
+				var index = 1
+				function buttonshow() {
+					for(var i = 0; i < buttons.length; i++) {
+						if(buttons[i].className == "on") {
+							buttons[i].className = ""
+						}
+					}
+					buttons[index-1].className = "on"
+				}
+				//点击butoon跳转页面
+				document.getElementById("biaoji").addEventListener("click",function(e){
+					console.log(e.target.innerHTML)
+					var xieleft = (e.target.innerHTML)*-400
+//					xie.style.left = xieleft + 'px'
+					animate(xieleft)
+					console.log(xieleft)
+					index = e.target.innerHTML+1
+//					buttonshow()
+				})
+				
+
+			}
+		</script>
+	</body>
+
+</html>

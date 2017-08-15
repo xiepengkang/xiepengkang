@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="qrcode"></div>
+		<script src="qrcode.js"></script>
+		<script>
+			new QRCode(document.getElementById('qrcode'), 'your content');
+
+				// 设置参数方式
+				var qrcode = new QRCode('qrcode', {
+				  text: 'your content',
+				  width: 256px,
+				  height: 256px,
+				  colorDark : '#000000',
+				  colorLight : '#ffffff',
+				  correctLevel : QRCode.CorrectLevel.H
+				});
+				
+				// 使用 API
+				qrcode.clear();
+				qrcode.makeCode('new content');
+		</script>
+	</body>
+</html>
